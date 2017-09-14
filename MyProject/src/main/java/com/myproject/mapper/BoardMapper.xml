@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.myproject.mapper.BoardMapper">
+
+	<select id="board_list" resultType="org.json.simple.JSONObject">
+		SELECT
+			BOARD_SEQ 
+			, BOARD_CATEGORY 
+			, BOARD_SUBJECT 
+			, BOARD_CONTENT 
+			, BOARD_TAG 
+			, BOARD_WRITER 
+			, BOARD_WRITER_SEQ 
+			, DATE_FORMAT(BOARD_INSERT_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_INSERT_DATE
+			, DATE_FORMAT(BOARD_UPDATE_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_UPDATE_DATE
+			, BOARD_LIKE 
+			, BOARD_WARNING 
+			, BOARD_HIT
+		FROM BOARD
+		ORDER BY BOARD_INSERT_DATE DESC
+	</select>
+	
+	<select id="board_detail" resultType="org.json.simple.JSONObject">
+		SELECT
+			BOARD_SEQ 
+			, BOARD_CATEGORY 
+			, BOARD_SUBJECT 
+			, BOARD_CONTENT 
+			, BOARD_TAG 
+			, BOARD_WRITER 
+			, BOARD_WRITER_SEQ 
+			, DATE_FORMAT(BOARD_INSERT_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_INSERT_DATE
+			, DATE_FORMAT(BOARD_UPDATE_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_UPDATE_DATE
+			, BOARD_LIKE 
+			, BOARD_WARNING 
+			, BOARD_HIT
+		FROM BOARD
+		WHERE BOARD_SEQ = #{board_seq}
+	</select>
+	
+	<insert id="board_insert" parameterType="org.json.simple.JSONObject">
+		INSERT INTO BOARD
+			(
+				BOARD_CATEGORY
+				, BOARD_SUBJECT
+				, BOARD_CONTENT
+				, BOARD_WRITER
+				, BOARD_WRITER_SEQ
+				<if test="tag != null">
+				, BOARD_TAG
+				</if>
+			)
+		VALUES
+			(
+				#{category}
+				, #{subject}
+				, #{content}
+				, #{board_writer}
+				, #{board_writer_seq}
+				<if test="tag != null">
+				, #{tag}
+				</if>
+			)
+	</insert>
+	
+	<update id="board_update" parameterType="org.json.simple.JSONObject">
+		UPDATE BOARD SET
+			BOARD_UPDATE_DATE = now()
+			<if test="category != null">
+			, BOARD_CATEGORY = #{category}
+			</if>
+			<if test="subject != null">
+			, BOARD_SUBJECT = #{subject}
+			</if>
+			<if test="content != null">
+			, BOARD_CONTENT = #{content}
+			</if>
+			<if test="tag != null">
+			, BOARD_TAG = #{tag}
+			</if>
+			<if test="board_like != null">
+			, BOARD_LIKE = (BOARD_LIKE + 1)
+			</if>
+			<if test="board_warning != null">
+			, BOARD_WARNING = (BOARD_WARNING + 1)
+			</if>
+			<if test="board_hit != null">
+			, BOARD_HIT = (BOARD_HIT + 1)
+			</if>
+		WHERE BOARD_SEQ = #{board_seq}
+	</update>
+	
+	<delete id="board_delete" parameterType="int">
+		DELETE FROM BOARD WHERE BOARD_SEQ = #{board_seq}
+	</delete>
+
+</mapper>
