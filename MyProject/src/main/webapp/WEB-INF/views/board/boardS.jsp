@@ -37,7 +37,9 @@ function insertBoard(){
 		contentType: "application/json",
 		data : JSON.stringify(formData),
 		success : function(data){
-			console.log(data);
+			if(data == 1){
+				location.replace('/board');
+			}
 		}
 	});
 }

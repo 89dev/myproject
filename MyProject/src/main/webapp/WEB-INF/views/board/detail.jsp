@@ -43,19 +43,24 @@
 	
 	<div class="row" style="margin-top:20px;">
 		<div class="row">
-			<label>코멘트</label>
+			<label>코멘트 (${detail.COMM_COUNT})</label>
+			
+			<table class="table table-hover">
+				<tbody class="commArea"></tbody>
+			</table>
 		</div>
 		
 		<div class="row" >
-			<form name="insertForm">
+			<form name="commForm">
 			  	<div class="form-group" style="margin-bottom:5px;">
-			   		<textarea class="form-control" name="comment" placeholder="comment" rows="3"></textarea>
+			   		<textarea class="form-control" name="comm_content" placeholder="comment" rows="3"></textarea>
 			  	</div>
 			  	<!-- 임시 -->
-			  	<input type="hidden" name="board_writer" value="testwirter"/>
-			  	<input type="hidden" name="board_writer_seq" value="1"/>
+			  	<input type="hidden" name="comm_writer" value="testwirter"/>
+			  	<input type="hidden" name="comm_writer_seq" value="1"/>
+			  	<input type="hidden" name="board_seq" value="${detail.BOARD_SEQ}"/>
 			  	
-			  	<button type="button" class="btn btn-default btn-sm" style="float:right;">등록</button>
+			  	<button type="button" class="btn btn-default btn-sm" style="float:right;" onclick="commInsert();">등록</button>
 			</form>
 		</div>
 	</div>

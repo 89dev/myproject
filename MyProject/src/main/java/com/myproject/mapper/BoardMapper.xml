@@ -19,26 +19,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, BOARD_LIKE 
 			, BOARD_WARNING 
 			, BOARD_HIT
-		FROM BOARD
+		FROM BOARD B
 		ORDER BY BOARD_INSERT_DATE DESC
 	</select>
 	
 	<select id="board_detail" resultType="org.json.simple.JSONObject">
 		SELECT
-			BOARD_SEQ 
-			, BOARD_CATEGORY 
-			, BOARD_SUBJECT 
-			, BOARD_CONTENT 
-			, BOARD_TAG 
-			, BOARD_WRITER 
-			, BOARD_WRITER_SEQ 
-			, DATE_FORMAT(BOARD_INSERT_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_INSERT_DATE
-			, DATE_FORMAT(BOARD_UPDATE_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_UPDATE_DATE
-			, BOARD_LIKE 
-			, BOARD_WARNING 
-			, BOARD_HIT
-		FROM BOARD
-		WHERE BOARD_SEQ = #{board_seq}
+			B.BOARD_SEQ 
+			, B.BOARD_CATEGORY 
+			, B.BOARD_SUBJECT 
+			, B.BOARD_CONTENT 
+			, B.BOARD_TAG 
+			, B.BOARD_WRITER 
+			, B.BOARD_WRITER_SEQ 
+			, DATE_FORMAT(B.BOARD_INSERT_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_INSERT_DATE
+			, DATE_FORMAT(B.BOARD_UPDATE_DATE, '%Y/%m/%d %H:%m:%d') AS BOARD_UPDATE_DATE
+			, B.BOARD_LIKE 
+			, B.BOARD_WARNING 
+			, B.BOARD_HIT
+			, COUNT(C.BOARD_SEQ) AS COMM_COUNT
+		FROM BOARD B
+			LEFT OUTER JOIN COMMENT C
+		ON B.BOARD_SEQ = C.BOARD_SEQ
+		WHERE 
+			B.BOARD_SEQ = #{board_seq}
 	</select>
 	
 	<insert id="board_insert" parameterType="org.json.simple.JSONObject">

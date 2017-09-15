@@ -24,6 +24,13 @@ public class BoardService {
 	}
 	
 	public JSONObject boardDetailService(int board_seq){
+		
+		JSONObject updateData = new JSONObject();
+		updateData.put("board_seq", board_seq);
+		updateData.put("board_hit", "hit");
+		
+		mBoardMapper.board_update(updateData);
+		
 		return mBoardMapper.board_detail(board_seq);
 	}
 	
