@@ -26,7 +26,7 @@ jQuery.fn.serializeObject = function() {
 
 
 
-function insertBoard(){
+/* function insertBoard(){
 	var formData = $('[name=insertForm]').serializeObject();
 	console.log(formData);
 	
@@ -37,6 +37,23 @@ function insertBoard(){
 		contentType: "application/json",
 		data : JSON.stringify(formData),
 		success : function(data){
+			if(data == 1){
+				location.replace('/board');
+			}
+		}
+	});
+} */
+
+
+function insertBoard(){
+	var formData = new FormData($('[name=insertForm]')[0]);
+	$.ajax({
+		type:'post',
+		url:'/board/',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(data){
 			if(data == 1){
 				location.replace('/board');
 			}

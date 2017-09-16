@@ -76,7 +76,7 @@
 		  	</div>
 		  	<div class="form-group">
 		    	<label for="exampleInputFile">파일 업로드</label>
-		    	<input type="file" id="exampleInputFile">
+		    	<input type="file" id="exampleInputFile" name="files">
 		    	<p class="help-block">파일 크기 어쩌구 저쩌구</p>
 		  	</div>
 		  	

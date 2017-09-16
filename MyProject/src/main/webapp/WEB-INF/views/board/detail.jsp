@@ -21,9 +21,10 @@
 		</div>
 		
 		<div class="row" style="padding:25px; border-bottom:2px solid darkgray;">
+			<a href="/board/fileDown/${detail.FILES_SEQ}" style="margin-bottom : 5px;">${detail.FILES_ORI_NAME}</a>
 			<p>${detail.BOARD_CONTENT}</p>
 			
-			<div class="row" style="margin-top : 10px;">
+			<div class="row" style="margin-top : 20px;">
 				<center>
 				<button type="button" class="btn btn-default">
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>

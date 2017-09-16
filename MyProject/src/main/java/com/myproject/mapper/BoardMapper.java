@@ -17,4 +17,8 @@ public interface BoardMapper {
 	public int board_update(JSONObject updateData);
 	
 	public int board_delete(int board_seq);
+	
+	public int file_insert(JSONObject insertData);
+	
+	public JSONObject file_detail(int files_seq);
 }

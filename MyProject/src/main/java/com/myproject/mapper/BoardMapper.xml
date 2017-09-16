@@ -37,15 +37,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, B.BOARD_LIKE 
 			, B.BOARD_WARNING 
 			, B.BOARD_HIT
-			, COUNT(C.BOARD_SEQ) AS COMM_COUNT
+			<!-- , COUNT(C.BOARD_SEQ) AS COMM_COUNT -->
+			, F.FILES_NAME
+			, F.FILES_ORI_NAME
+			, F.FILES_SEQ
 		FROM BOARD B
+			LEFT OUTER JOIN FILES F
+				ON B.BOARD_SEQ = F.BOARD_SEQ
 			LEFT OUTER JOIN COMMENT C
-		ON B.BOARD_SEQ = C.BOARD_SEQ
+				ON B.BOARD_SEQ = C.BOARD_SEQ
 		WHERE 
 			B.BOARD_SEQ = #{board_seq}
 	</select>
 	
-	<insert id="board_insert" parameterType="org.json.simple.JSONObject">
+	<insert id="board_insert" parameterType="org.json.simple.JSONObject" useGeneratedKeys="true" keyProperty="idx">
 		INSERT INTO BOARD
 			(
 				BOARD_CATEGORY
@@ -53,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, BOARD_CONTENT
 				, BOARD_WRITER
 				, BOARD_WRITER_SEQ
+				, BOARD_INSERT_DATE
 				<if test="tag != null">
 				, BOARD_TAG
 				</if>
@@ -64,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, #{content}
 				, #{board_writer}
 				, #{board_writer_seq}
+				, now()
 				<if test="tag != null">
 				, #{tag}
 				</if>
@@ -101,4 +108,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM BOARD WHERE BOARD_SEQ = #{board_seq}
 	</delete>
 
+
+
+<!-- file -->
+	<insert id="file_insert" parameterType="org.json.simple.JSONObject">
+		INSERT INTO FILES 
+			(
+				BOARD_SEQ
+				,FILES_NAME
+				,FILES_ORI_NAME
+			)
+		VALUES
+			(
+				#{board_seq}
+				,#{files_name}
+				,#{files_ori_name}
+			)
+	</insert>
+
+	<select id="file_detail" parameterType="int" resultType="org.json.simple.JSONObject">
+		SELECT
+			*
+		FROM FILES
+		WHERE FILES_SEQ = #{files_seq}
+	</select>
 </mapper>

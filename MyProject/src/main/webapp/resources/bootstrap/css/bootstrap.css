@@ -1579,6 +1579,14 @@ pre code {
   padding-left: 15px;
   padding-right: 15px;
 }
+
+.container-timeline{
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -1592,6 +1600,23 @@ pre code {
 @media (min-width: 1200px) {
   .container {
     width: 970px;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .container-timeline {
+    width: 500px;
+  }
+}
+@media (min-width: 992px) {
+  .container-timeline {
+    width: 600px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-timeline {
+    width: 600px;
   }
 }
 .container-fluid {

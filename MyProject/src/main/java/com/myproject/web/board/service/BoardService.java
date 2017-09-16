@@ -20,7 +20,20 @@ public class BoardService {
 	}
 	
 	public int boardInsertService(JSONObject insertData){
-		return mBoardMapper.board_insert(insertData);
+		
+		int result = 0;
+		
+		
+		if(insertData.containsKey("files_name") && insertData.containsKey("files_ori_name")){
+			result = mBoardMapper.board_insert(insertData);
+			insertData.put("board_seq", insertData.get("idx"));
+			mBoardMapper.file_insert(insertData);
+			
+		}else{
+			result = mBoardMapper.board_insert(insertData);
+		}
+		
+		return result;
 	}
 	
 	public JSONObject boardDetailService(int board_seq){
@@ -41,4 +54,14 @@ public class BoardService {
 	public int boardDeleteService(int board_seq){
 		return mBoardMapper.board_delete(board_seq);
 	}
+	
+	
+	
+	
+	
+	//file
+	public JSONObject fileDetail(int files_seq){
+		return mBoardMapper.file_detail(files_seq);
+	}
+	
 }
